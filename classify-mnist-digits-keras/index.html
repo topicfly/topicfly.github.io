@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next mist" lang="en-US">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.0" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="machine-learning,deep-learning,keras,convolutional-neural-network," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="One of the basic examples in Machine Learning is to classify handwritten digits using the MNIST dataset. Here I’ll show you how to solve this problem using a Convolutional Neural Network (CNN) with Ke">
+<meta name="keywords" content="machine-learning,deep-learning,keras,convolutional-neural-network">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Classify MNIST handwritten digits with Keras">
+<meta property="og:url" content="https://topicfly.io/classify-mnist-digits-keras/index.html">
+<meta property="og:site_name" content="Topicfly">
+<meta property="og:description" content="One of the basic examples in Machine Learning is to classify handwritten digits using the MNIST dataset. Here I’ll show you how to solve this problem using a Convolutional Neural Network (CNN) with Ke">
+<meta property="og:locale" content="en-US">
+<meta property="og:image" content="https://topicfly.io/classify-mnist-digits-keras/mnist-examples.png">
+<meta property="og:image" content="https://topicfly.io/classify-mnist-digits-keras/conv.png">
+<meta property="og:image" content="https://topicfly.io/classify-mnist-digits-keras/pyplot-digits.png">
+<meta property="og:image" content="https://topicfly.io/classify-mnist-digits-keras/keras-fit.png">
+<meta property="og:image" content="https://topicfly.io/classify-mnist-digits-keras/plots.png">
+<meta property="og:updated_time" content="2018-07-25T00:49:02.189Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Classify MNIST handwritten digits with Keras">
+<meta name="twitter:description" content="One of the basic examples in Machine Learning is to classify handwritten digits using the MNIST dataset. Here I’ll show you how to solve this problem using a Convolutional Neural Network (CNN) with Ke">
+<meta name="twitter:image" content="https://topicfly.io/classify-mnist-digits-keras/mnist-examples.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false},
+    duoshuo: {
+      userId: 'undefined',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://topicfly.io/classify-mnist-digits-keras/"/>
+
+
+
+
+
+  <title>Classify MNIST handwritten digits with Keras | Topicfly</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en-US">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Topicfly</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://topicfly.io/classify-mnist-digits-keras/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Topicfly">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Classify MNIST handwritten digits with Keras</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-24T00:00:00-07:00">2018-07-24</time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-author">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-text">Isaac Zepeda</span>
+            </span>
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>One of the basic examples in Machine Learning is to classify handwritten digits using the MNIST dataset. Here I’ll show you how to solve this problem using a Convolutional Neural Network (CNN) with <a href="https://keras.io/" target="_blank" rel="noopener">Keras</a> a high-level neural networks API.</p>
+<a id="more"></a>
+<h2 id="The-MNIST-Dataset"><a href="#The-MNIST-Dataset" class="headerlink" title="The MNIST Dataset"></a>The MNIST Dataset</h2><p>The <a href="http://yann.lecun.com/exdb/mnist/" target="_blank" rel="noopener">MNIST Dataset</a> contains 60,000 examples of handwritten digits images normalized to fit a 28x28 pixel bounding and anti-aliased which introduced grayscale levels.</p>
+<p><img src="/classify-mnist-digits-keras/mnist-examples.png"></p>
+<p>Keras already has a <a href="https://keras.io/datasets/" target="_blank" rel="noopener">datasets module</a> from which I’ll load the MNIST dataset and automatically get my training and test datasets.</p>
+<h2 id="Convolutional-Neural-Networks"><a href="#Convolutional-Neural-Networks" class="headerlink" title="Convolutional Neural Networks"></a>Convolutional Neural Networks</h2><p>Convolutional Neural Networks (CNN) make the assumption that the input are images.</p>
+<p>The CNN arquitecture is defined by different layers: Input Layer, Convolutional Layer, Activation Layer (ReLU), Pooling Layer, Fully-Connected Layer.</p>
+<p>The <strong>input layer</strong> normally has the shape <code>height x width x depth</code>, in this post example it’s <em>28x28x1</em> but in color images the <em>depth</em> would be 3, one for each value in the RGB color model.</p>
+<p>The input then is passed to a <strong>convolutional layer</strong> using <code>n</code> filters, it creates another matrix with different height, width and as deep as many filters defined. A filter is a small window normally <em>5x5xinput_depth</em> in size, it traverses all the image to get its features. Its output goes into and activation function, in this case a <a href="https://en.wikipedia.org/wiki/Rectifier_(neural_networks)" target="_blank" rel="noopener">ReLu function</a>.</p>
+<p>The resulting layers then goes into a <strong>pooling layer</strong> that reduces dimensionality. Then the <strong>fully-connected layer</strong> is a normal feed forward layer for classification.</p>
+<p>We could combine the conv layer with another conv to a pooling layer and repeat it <em>n</em> times before going to the fully-connected layer that at the same time could have several fully-connected layers.</p>
+<p><img src="/classify-mnist-digits-keras/conv.png"></p>
+<p>For further detail about Convolutiona Neural Networks you can visit <a href="http://cs231n.stanford.edu/" target="_blank" rel="noopener">http://cs231n.stanford.edu/</a> or go the <a href="#bibliography">bibligraphy section</a>.</p>
+<h2 id="Libraries-and-modules"><a href="#Libraries-and-modules" class="headerlink" title="Libraries and modules"></a>Libraries and modules</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">np.random.seed(<span class="number">123</span>)  <span class="comment"># for reproducibility</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Sequential</span><br><span class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Dense, Dropout, Flatten</span><br><span class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Conv2D, MaxPooling2D</span><br><span class="line"><span class="keyword">from</span> keras.utils <span class="keyword">import</span> np_utils</span><br><span class="line"><span class="keyword">from</span> keras.datasets <span class="keyword">import</span> mnist</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br></pre></td></tr></table></figure>
+<p>I import <a href="http://www.numpy.org/" target="_blank" rel="noopener">Numpy</a> for matrix manipulation, <a href="https://matplotlib.org/api/pyplot_api.html" target="_blank" rel="noopener">pyplot</a> from <a href="https://matplotlib.org/" target="_blank" rel="noopener">matplotlib</a> to render some graphic representation of the data, <code>keras.util</code> to more data manipulation, and the <a href="https://keras.io/datasets/#mnist-database-of-handwritten-digits" target="_blank" rel="noopener">MNIST dataset</a> provided by keras.</p>
+<p>The keras <a href="https://keras.io/models/sequential/" target="_blank" rel="noopener">Sequential</a> model allows to <code>add</code> layers, each layer having its own arquitecture and purpose.</p>
+<p>The idea is to sequentially add different layers to our model util having a Neural Network arquitecture that can process and classify images of handwritting digits.</p>
+<h2 id="Data-Preparation"><a href="#Data-Preparation" class="headerlink" title="Data Preparation"></a>Data Preparation</h2><p>Every Machine Learning model needs some data preparation. Sometimes this is the most exahustive and underrated (for beginners) part of the process.</p>
+<ol>
+<li>Load dataset.</li>
+<li>Separate dataset into training and test datasets.</li>
+<li>Visualize data to get some intuition.</li>
+<li>Prepare input data to feed the input layer.</li>
+<li>Prepare label data.</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># load dataset</span></span><br><span class="line">(X_train, y_train), (X_test, y_test) = mnist.load_data();</span><br></pre></td></tr></table></figure>
+<p>The <code>load_data()</code> function return two tuples, already splitting the data in training and test collections.</p>
+<p>The <code>X_train.shape</code> will be <code>(60000, 28, 28)</code>, 60,000 examples of 28x28 pixes grayscale images of the 10 digits while <code>y_train</code> is an vector fo 60,000 examples where each element is an integer from 0 to 9, and (<code>X_test</code> and <code>y_test</code> contains 10,000 examples. Remember that <code>X_train[n]</code> corresponds to <code>y_train[n]</code>.</p>
+<p>Let’s visualice the 4 first samples as images using <code>pyplot</code>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">plt.subplot(<span class="number">221</span>)</span><br><span class="line">plt.imshow(X_train[<span class="number">0</span>], cmap=plt.get_cmap(<span class="string">'gray'</span>))</span><br><span class="line">plt.subplot(<span class="number">222</span>)</span><br><span class="line">plt.imshow(X_train[<span class="number">1</span>], cmap=plt.get_cmap(<span class="string">'gray'</span>))</span><br><span class="line">plt.subplot(<span class="number">223</span>)</span><br><span class="line">plt.imshow(X_train[<span class="number">2</span>], cmap=plt.get_cmap(<span class="string">'gray'</span>))</span><br><span class="line">plt.subplot(<span class="number">224</span>)</span><br><span class="line">plt.imshow(X_train[<span class="number">3</span>], cmap=plt.get_cmap(<span class="string">'gray'</span>))</span><br></pre></td></tr></table></figure>
+<p><img src="/classify-mnist-digits-keras/pyplot-digits.png" width="300px"></p>
+<p>The next step is to reshape the input matrix to have the shape <code>batch x height x width x channels</code>, since these are grayscale images the <em>channels</em> will be 1, in other images the <em>channels</em> normally would be 3, one for each color in the RGB color model.</p>
+<p><em>Note: I’m using tensorflow as my keras backend, for tensorflow the input shape needs to have the shape (batch, height, width, channels) this is the current default input shape for <code>Conv2D</code>, but other backends accept the shape (batch, channels, height, width) as default. You could change this value by setting <code>data_format</code> parameter in the <code>Conv2D</code> initialization to <code>channels_last</code> (current default) or <code>channels_first</code>. Also by modifying the value in the Keras config file.</em></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">X_train = X_train.reshape(X_train.shape[<span class="number">0</span>], <span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>)</span><br><span class="line">X_test = X_test.reshape(X_test.shape[<span class="number">0</span>], <span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>)</span><br><span class="line">print(X_train) <span class="comment"># (60000, 28, 28, 1)</span></span><br></pre></td></tr></table></figure>
+<p>Also I’ll normalize the input data to be in the range from <code>0</code> to <code>1</code>, first I’ll change the type to <code>float32</code> and divide all elements by 255.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">X_train = X_train.astype(<span class="string">'float32'</span>)</span><br><span class="line">X_test = X_test.astype(<span class="string">'float32'</span>)</span><br><span class="line">X_train /= <span class="number">255</span></span><br><span class="line">X_test /= <span class="number">255</span></span><br></pre></td></tr></table></figure>
+<p>Remember the label data <code>y_train</code> is a 1-dimensional array with an integer value from 0 to 9, I’m converting to an 10-dimensional class matrices. So if the <code>y_train[0]</code> is <code>5</code> it will be an array of 10 elements where the 4th element would be <code>1.0</code> and the rest <code>0.0</code>, <em>this way I can compare my output layer of 10 nodes with this labeled data</em>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Y_train = np_utils.to_categorical(y_train, <span class="number">10</span>)</span><br><span class="line">Y_test = np_utils.to_categorical(y_test, <span class="number">10</span>)</span><br><span class="line">print(Y_train[<span class="number">0</span>]) <span class="comment">#[0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]</span></span><br></pre></td></tr></table></figure>
+<h2 id="Neural-Network-arquitecture"><a href="#Neural-Network-arquitecture" class="headerlink" title="Neural Network arquitecture"></a>Neural Network arquitecture</h2><p>There are several layer arquitectures that I could implement, I decided to go as follows:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">model = Sequential()</span><br><span class="line">model.add(Conv2D(<span class="number">30</span>, (<span class="number">5</span>, <span class="number">5</span>), activation=<span class="string">'relu'</span>, input_shape=(<span class="number">28</span>,<span class="number">28</span>,<span class="number">1</span>)))</span><br><span class="line">model.add(MaxPooling2D(pool_size=(<span class="number">2</span>, <span class="number">2</span>)))</span><br><span class="line">model.add(Conv2D(<span class="number">15</span>, (<span class="number">3</span>, <span class="number">3</span>), activation=<span class="string">'relu'</span>))</span><br><span class="line">model.add(MaxPooling2D(pool_size=(<span class="number">2</span>,<span class="number">2</span>)))</span><br><span class="line">model.add(Dropout(<span class="number">0.2</span>))</span><br><span class="line"></span><br><span class="line">model.add(Flatten())</span><br><span class="line">model.add(Dense(<span class="number">128</span>, activation=<span class="string">'relu'</span>))</span><br><span class="line">model.add(Dense(<span class="number">50</span>, activation=<span class="string">'relu'</span>))</span><br><span class="line">model.add(Dense(<span class="number">10</span>, activation=<span class="string">'softmax'</span>))</span><br></pre></td></tr></table></figure>
+<p>The <a href="https://keras.io/models/sequential/" target="_blank" rel="noopener">keras Sequential model</a> allows to generate a model for training by adding layers to it.</p>
+<p>The first layer is a <a href="https://keras.io/layers/convolutional/#conv2d" target="_blank" rel="noopener">Conv2D</a> layer with a <a href="https://en.wikipedia.org/wiki/Rectifier_(neural_networks)" target="_blank" rel="noopener">ReLU activation function</a>, <code>30</code> output filters and a 5x5 convolutional window. The <code>input_shape</code> is the same shape as each element in <code>X_train</code> and <code>X_test</code>, notice that I only defined the <code>input_shape</code> in the first layer.</p>
+<p>Then comes the Pooling layer, I’m using the <a href="https://keras.io/layers/pooling/#maxpooling2d" target="_blank" rel="noopener">MaxPooling2D</a> keras layer with a 2x2 pool size.</p>
+<p>After that I connected another <code>Conv2D</code> with ReLU activation, 15 filters and 3x3 window and connected it to a 2x2 <code>MaxPooling2D</code> layer.</p>
+<p>I use a <a href="https://keras.io/layers/core/#dropout" target="_blank" rel="noopener">Dropout</a> layer for regularization to prevent overfitting.</p>
+<p>After the convolutions I want to classify the data with fully connected layers, thus I use a <a href="https://keras.io/layers/core/#flatten" target="_blank" rel="noopener">Flatten</a> layer to flat the <code>Dropout</code> output to a 1-dimensional vector to be used as input for two <a href="https://keras.io/layers/core/#dense" target="_blank" rel="noopener">Dense</a> (fully-connected) layers with ReLU activation and with 128 and 50 nodes respectively.</p>
+<p>The output layer is a <code>Dense</code> layer with 10 nodes, same dimension as an element in <code>Y_train</code> and <code>Y_test</code>, and <a href="https://en.wikipedia.org/wiki/Softmax_function" target="_blank" rel="noopener">softmax</a> activation function.</p>
+<p>I could use more or less Conv2D layers, or add other Dropout between the MaxPooling2D and the second Conv2D, I could change the hyperparameters in each layer, or the total nodes in one of the Dense layers, or use one Dense layer instead of two. Trying several architechtures and mesuring which generalize better is part of the Data Scientist/Machine Learning Engineer daily job.</p>
+<h2 id="Compile-model"><a href="#Compile-model" class="headerlink" title="Compile model"></a>Compile model</h2><p>In the compilation section I’ll define some model configuration like loss and optimizer.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">model.compile(loss=<span class="string">'categorical_crossentropy'</span>,</span><br><span class="line">             optimizer=<span class="string">'adam'</span>,</span><br><span class="line">             metrics=[<span class="string">'accuracy'</span>])</span><br></pre></td></tr></table></figure>
+<p>I’ll go with categorical <a href="http://ml-cheatsheet.readthedocs.io/en/latest/loss_functions.html#cross-entropy" target="_blank" rel="noopener">cross-entropy</a> as loss function, and <a href="https://machinelearningmastery.com/adam-optimization-algorithm-for-deep-learning/" target="_blank" rel="noopener">Adam algorithm</a> to optimize it.</p>
+<h2 id="Train-model"><a href="#Train-model" class="headerlink" title="Train model"></a>Train model</h2><p>The model is defined and configured, now it needs to fit the training data through some “epochs” until the network weights can generalize our data.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">history = model.fit(X_train, Y_train,</span><br><span class="line">                    validation_data=(X_test, Y_test),</span><br><span class="line">                    epochs=<span class="number">5</span>,</span><br><span class="line">                    batch_size=<span class="number">200</span>,</span><br><span class="line">                    verbose=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>You could select and tweak the <code>epochs</code> and <code>batch_size</code> (numbers of examples in each epoch). I like the to use <code>verbose=1</code> because it gives you a nice animated training status and progress in the console or jupyter notebook output.</p>
+<p><img src="/classify-mnist-digits-keras/keras-fit.png"></p>
+<p>All this data is helpful because when I’m training my model I want the loss to be as close to zero as possible and accuracy close to <code>1.0</code> (100%). Also it displays how much time each epoch and step took (50s aprox per epoch).</p>
+<p>I have assigned the <code>fit</code> returned value to <code>history</code> variable, since I’m going to print a nice ploits in the further section.</p>
+<h2 id="Evaluate-model"><a href="#Evaluate-model" class="headerlink" title="Evaluate model"></a>Evaluate model</h2><p>Now I’m using my test dataset to <code>evaluate</code> the model.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">score = model.evaluate(X_test, Y_test, verbose=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>The <code>score</code> contains an array where the first element is the loss and the second is accuracy, you could check the metrics name in <code>model.metrics_name</code>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">"CNN Error: %.2f%%"</span> % (<span class="number">100</span>-score[<span class="number">1</span>]*<span class="number">100</span>))</span><br><span class="line"><span class="comment"># CNN Error: 0.74%</span></span><br><span class="line">print(<span class="string">"Loss: %.2f"</span> % score[<span class="number">0</span>])</span><br><span class="line"><span class="comment"># Loss: 0.03</span></span><br><span class="line">print(<span class="string">"Accurracy: %.2f%%"</span> % (score[<span class="number">1</span>]*<span class="number">100</span>))</span><br><span class="line"><span class="comment"># Accurracy: 99.06%</span></span><br></pre></td></tr></table></figure>
+<h2 id="Visualize-training-history"><a href="#Visualize-training-history" class="headerlink" title="Visualize training history"></a>Visualize training history</h2><p>Using the <code>history</code> variable I could create a couple of plots to check the model accuracy and model loss during training.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># summarize history for accuracy</span></span><br><span class="line">plt.plot(history.history[<span class="string">'acc'</span>])</span><br><span class="line">plt.plot(history.history[<span class="string">'val_acc'</span>])</span><br><span class="line">plt.title(<span class="string">'model accuracy'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'accuracy'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'epoch'</span>)</span><br><span class="line">plt.legend([<span class="string">'train'</span>, <span class="string">'test'</span>], loc=<span class="string">'upper left'</span>)</span><br><span class="line">plt.show()</span><br><span class="line"><span class="comment"># summarize history for loss</span></span><br><span class="line">plt.plot(history.history[<span class="string">'loss'</span>])</span><br><span class="line">plt.plot(history.history[<span class="string">'val_loss'</span>])</span><br><span class="line">plt.title(<span class="string">'model loss'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'loss'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'epoch'</span>)</span><br><span class="line">plt.legend([<span class="string">'train'</span>, <span class="string">'test'</span>], loc=<span class="string">'upper left'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/classify-mnist-digits-keras/plots.png" width="320px"></p>
+<h2 id="Complete-Code"><a href="#Complete-Code" class="headerlink" title="Complete Code"></a>Complete Code</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">np.random.seed(<span class="number">123</span>)  <span class="comment"># for reproducibility</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Sequential</span><br><span class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Dense, Dropout, Flatten</span><br><span class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Conv2D, MaxPooling2D</span><br><span class="line"><span class="keyword">from</span> keras.utils <span class="keyword">import</span> np_utils</span><br><span class="line"><span class="keyword">from</span> keras.datasets <span class="keyword">import</span> mnist</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">(X_train, y_train), (X_test, y_test) = mnist.load_data();</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">221</span>)</span><br><span class="line">plt.imshow(X_train[<span class="number">0</span>], cmap=plt.get_cmap(<span class="string">'gray'</span>))</span><br><span class="line">plt.subplot(<span class="number">222</span>)</span><br><span class="line">plt.imshow(X_train[<span class="number">1</span>], cmap=plt.get_cmap(<span class="string">'gray'</span>))</span><br><span class="line">plt.subplot(<span class="number">223</span>)</span><br><span class="line">plt.imshow(X_train[<span class="number">2</span>], cmap=plt.get_cmap(<span class="string">'gray'</span>))</span><br><span class="line">plt.subplot(<span class="number">224</span>)</span><br><span class="line">plt.imshow(X_train[<span class="number">3</span>], cmap=plt.get_cmap(<span class="string">'gray'</span>))</span><br><span class="line"></span><br><span class="line">X_train = X_train.reshape(X_train.shape[<span class="number">0</span>], <span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>)</span><br><span class="line">X_test = X_test.reshape(X_test.shape[<span class="number">0</span>], <span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>)</span><br><span class="line">X_train = X_train.astype(<span class="string">'float32'</span>)</span><br><span class="line">X_test = X_test.astype(<span class="string">'float32'</span>)</span><br><span class="line">X_train /= <span class="number">255</span></span><br><span class="line">X_test /= <span class="number">255</span></span><br><span class="line"></span><br><span class="line">Y_train = np_utils.to_categorical(y_train, <span class="number">10</span>)</span><br><span class="line">Y_test = np_utils.to_categorical(y_test, <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">model = Sequential()</span><br><span class="line">model.add(Conv2D(<span class="number">30</span>, (<span class="number">5</span>, <span class="number">5</span>), activation=<span class="string">'relu'</span>, input_shape=(<span class="number">28</span>,<span class="number">28</span>,<span class="number">1</span>)))</span><br><span class="line">model.add(MaxPooling2D(pool_size=(<span class="number">2</span>, <span class="number">2</span>)))</span><br><span class="line">model.add(Conv2D(<span class="number">15</span>, (<span class="number">3</span>, <span class="number">3</span>), activation=<span class="string">'relu'</span>))</span><br><span class="line">model.add(MaxPooling2D(pool_size=(<span class="number">2</span>,<span class="number">2</span>)))</span><br><span class="line">model.add(Dropout(<span class="number">0.2</span>))</span><br><span class="line"></span><br><span class="line">model.add(Flatten())</span><br><span class="line">model.add(Dense(<span class="number">128</span>, activation=<span class="string">'relu'</span>))</span><br><span class="line">model.add(Dense(<span class="number">50</span>, activation=<span class="string">'relu'</span>))</span><br><span class="line">model.add(Dense(<span class="number">10</span>, activation=<span class="string">'softmax'</span>))</span><br><span class="line"></span><br><span class="line">model.compile(loss=<span class="string">'categorical_crossentropy'</span>,</span><br><span class="line">             optimizer=<span class="string">'adam'</span>,</span><br><span class="line">             metrics=[<span class="string">'accuracy'</span>])</span><br><span class="line"></span><br><span class="line">history = model.fit(X_train, Y_train,</span><br><span class="line">                    validation_data=(X_test, Y_test),</span><br><span class="line">                    epochs=<span class="number">5</span>,</span><br><span class="line">                    batch_size=<span class="number">200</span>,</span><br><span class="line">                    verbose=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">score = model.evaluate(X_test, Y_test, verbose=<span class="number">0</span>)</span><br><span class="line">print(<span class="string">"CNN Error: %.2f%%"</span> % (<span class="number">100</span>-score[<span class="number">1</span>]*<span class="number">100</span>))</span><br><span class="line">print(<span class="string">"Loss: %.2f"</span> % score[<span class="number">0</span>])</span><br><span class="line">print(<span class="string">"Accurracy: %.2f%%"</span> % (score[<span class="number">1</span>]*<span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">plt.plot(history.history[<span class="string">'acc'</span>])</span><br><span class="line">plt.plot(history.history[<span class="string">'val_acc'</span>])</span><br><span class="line">plt.title(<span class="string">'model accuracy'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'accuracy'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'epoch'</span>)</span><br><span class="line">plt.legend([<span class="string">'train'</span>, <span class="string">'test'</span>], loc=<span class="string">'upper left'</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line">plt.plot(history.history[<span class="string">'loss'</span>])</span><br><span class="line">plt.plot(history.history[<span class="string">'val_loss'</span>])</span><br><span class="line">plt.title(<span class="string">'model loss'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'loss'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'epoch'</span>)</span><br><span class="line">plt.legend([<span class="string">'train'</span>, <span class="string">'test'</span>], loc=<span class="string">'upper left'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>I really like keras to create deep learning models quickly and easily, thus testing ideas and hypothesis in datasets become a more efficent and pleasant work.</p>
+<p>I know we didn’t cover more in depth topics like what’s the loss function or the math behind Adam optimizer, or more about Convolutional Networks theory but I’ll leave all those topics for future posts.</p>
+<h2 id="Bibliography"><a href="#Bibliography" class="headerlink" title=" Bibliography"></a><a name="bibliography"></a> Bibliography</h2><p>Here are some links that helped me put togheter this post:</p>
+<ul>
+<li><a href="http://cs231n.github.io/convolutional-networks/" target="_blank" rel="noopener">http://cs231n.github.io/convolutional-networks/</a></li>
+<li><a href="https://www.youtube.com/watch?v=jajksuQW4mc" target="_blank" rel="noopener">https://www.youtube.com/watch?v=jajksuQW4mc</a></li>
+<li><a href="https://medium.freecodecamp.org/an-intuitive-guide-to-convolutional-neural-networks-260c2de0a050" target="_blank" rel="noopener">https://medium.freecodecamp.org/an-intuitive-guide-to-convolutional-neural-networks-260c2de0a050</a></li>
+<li><a href="https://elitedatascience.com/keras-tutorial-deep-learning-in-python#step-7" target="_blank" rel="noopener">https://elitedatascience.com/keras-tutorial-deep-learning-in-python#step-7</a></li>
+<li><a href="https://machinelearningmastery.com/handwritten-digit-recognition-using-convolutional-neural-networks-python-keras/" target="_blank" rel="noopener">https://machinelearningmastery.com/handwritten-digit-recognition-using-convolutional-neural-networks-python-keras/</a></li>
+<li><a href="https://medium.com/the-theory-of-everything/understanding-activation-functions-in-neural-networks-9491262884e0" target="_blank" rel="noopener">https://medium.com/the-theory-of-everything/understanding-activation-functions-in-neural-networks-9491262884e0</a></li>
+<li><a href="http://ml-cheatsheet.readthedocs.io/en/latest/loss_functions.html#cross-entropy" target="_blank" rel="noopener">http://ml-cheatsheet.readthedocs.io/en/latest/loss_functions.html#cross-entropy</a></li>
+<li><a href="https://machinelearningmastery.com/adam-optimization-algorithm-for-deep-learning/" target="_blank" rel="noopener">https://machinelearningmastery.com/adam-optimization-algorithm-for-deep-learning/</a></li>
+<li><a href="https://machinelearningmastery.com/display-deep-learning-model-training-history-in-keras/" target="_blank" rel="noopener">https://machinelearningmastery.com/display-deep-learning-model-training-history-in-keras/</a></li>
+<li><a href="http://yann.lecun.com/exdb/mnist/" target="_blank" rel="noopener">http://yann.lecun.com/exdb/mnist/</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/machine-learning/" rel="tag"># machine-learning</a>
+          
+            <a href="/tags/deep-learning/" rel="tag"># deep-learning</a>
+          
+            <a href="/tags/keras/" rel="tag"># keras</a>
+          
+            <a href="/tags/convolutional-neural-network/" rel="tag"># convolutional-neural-network</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/setup-tailwindcss_parcel_npm/" rel="next" title="Setup Tailwindcss with Parcel.js or npm.">
+                <i class="fa fa-chevron-left"></i> Setup Tailwindcss with Parcel.js or npm.
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-MNIST-Dataset"><span class="nav-number">1.</span> <span class="nav-text">The MNIST Dataset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Convolutional-Neural-Networks"><span class="nav-number">2.</span> <span class="nav-text">Convolutional Neural Networks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Libraries-and-modules"><span class="nav-number">3.</span> <span class="nav-text">Libraries and modules</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Preparation"><span class="nav-number">4.</span> <span class="nav-text">Data Preparation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Neural-Network-arquitecture"><span class="nav-number">5.</span> <span class="nav-text">Neural Network arquitecture</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Compile-model"><span class="nav-number">6.</span> <span class="nav-text">Compile model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Train-model"><span class="nav-number">7.</span> <span class="nav-text">Train model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Evaluate-model"><span class="nav-number">8.</span> <span class="nav-text">Evaluate model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Visualize-training-history"><span class="nav-number">9.</span> <span class="nav-text">Visualize training history</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Complete-Code"><span class="nav-number">10.</span> <span class="nav-text">Complete Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">11.</span> <span class="nav-text">Conclusion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bibliography"><span class="nav-number">12.</span> <span class="nav-text"> Bibliography</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+
+  
+
+  
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

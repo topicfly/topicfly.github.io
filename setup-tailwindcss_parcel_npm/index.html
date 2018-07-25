@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next mist" lang="en-US">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.0" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="machine-learning,deep-learning,keras,convolutional-neural-network," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="One of the basic examples in Machine Learning is to classify handwritten digits using the MNIST dataset. Here I’ll show you how to solve this problem using a Convolutional Neural Network (CNN) with Ke">
+<meta name="keywords" content="machine-learning,deep-learning,keras,convolutional-neural-network">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Classify MNIST handwritten digits with Keras">
+<meta property="og:url" content="https://topicfly.io/classify-mnist-digits-keras/index.html">
+<meta property="og:site_name" content="Topicfly">
+<meta property="og:description" content="One of the basic examples in Machine Learning is to classify handwritten digits using the MNIST dataset. Here I’ll show you how to solve this problem using a Convolutional Neural Network (CNN) with Ke">
+<meta property="og:locale" content="en-US">
+<meta property="og:image" content="https://topicfly.io/classify-mnist-digits-keras/mnist-examples.png">
+<meta property="og:image" content="https://topicfly.io/classify-mnist-digits-keras/conv.png">
+<meta property="og:image" content="https://topicfly.io/classify-mnist-digits-keras/pyplot-digits.png">
+<meta property="og:image" content="https://topicfly.io/classify-mnist-digits-keras/keras-fit.png">
+<meta property="og:image" content="https://topicfly.io/classify-mnist-digits-keras/plots.png">
+<meta property="og:updated_time" content="2018-07-25T00:49:02.189Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Classify MNIST handwritten digits with Keras">
+<meta name="twitter:description" content="One of the basic examples in Machine Learning is to classify handwritten digits using the MNIST dataset. Here I’ll show you how to solve this problem using a Convolutional Neural Network (CNN) with Ke">
+<meta name="twitter:image" content="https://topicfly.io/classify-mnist-digits-keras/mnist-examples.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false},
+    duoshuo: {
+      userId: 'undefined',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://topicfly.io/classify-mnist-digits-keras/"/>
+
+
+
+
+
+  <title>Setup Tailwindcss with Parcel.js or npm. | Topicfly</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en-US">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Topicfly</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://topicfly.io/setup-tailwindcss_parcel_npm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Topicfly">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Setup Tailwindcss with Parcel.js or npm.</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-20T00:00:00-07:00">2018-07-20</time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-author">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-text">Hector Yeomans</span>
+            </span>
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Why-Tailwindcss"><a href="#Why-Tailwindcss" class="headerlink" title="Why Tailwindcss?"></a>Why Tailwindcss?</h2><p>I still struggle with CSS. I know the theory, I’ve read it multiple times and in paper it makes sense. Once I’m there writing HTML and trying to style it with CSS it does not make any click in my mind.</p>
+<p>Tailwindcss goes the opposite way from full component frameworks like Bootstrap or Material UI. Tailwind is described as an utility first framework. Instead of having a class of <code>btn btn-primary</code> it will give you the classes to make a button, anchor or div a button exactly as you need it with a collection of classes: <code>bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded</code>.</p>
+<a id="more"></a>
+<p>I’ve worked in companies that have used a similar system to Tailwindcss and I know it works for a big development team. If you want proof of something that has been done with Tailwind, one of the main contributors for Tailwind has made excellent tutorials:</p>
+<ul>
+<li><a href="https://youtu.be/_JhTaENzfZQ?t=139" target="_blank" rel="noopener">Rebuilding Netlify with Tailwind CSS
+</a>: Title should be, “Rebuilding <strong>a screen</strong> from Netlify”</li>
+<li><a href="https://youtu.be/7gX_ApBeSpQ?t=502" target="_blank" rel="noopener">Rebuilding Coinbase with Tailwind CSS
+</a>: Title should be, “Rebuilding Coinbase <strong>dashboard</strong> with Tailwind CSS”</li>
+<li><a href="tailwindcomponents.com">tailwindcomponents.com</a>: If you’re looking for inspiration.</li>
+</ul>
+<h2 id="How-does-it-work"><a href="#How-does-it-work" class="headerlink" title="How does it work?"></a>How does it work?</h2><p>Tailwindcss works like this:</p>
+<ul>
+<li>You install npm development dependency</li>
+<li>You need PostCSS to use tailwindcss, so you install postcss npm dependency.</li>
+<li>You generate Tailwind configuration file:<ul>
+<li>This is the file that will give you a base of all the possible classes that you can have.</li>
+<li>This file dictates at build time, how many possible combinations you can have of colors, widths, heights, responsive utilities, etcetera.</li>
+<li>You will ultimately modify this file to add your brand colors, add new spacing dimensions and possibly add/remove hover states for responsive.</li>
+</ul>
+</li>
+<li>Once the file is generated, it’s recommended that you trim down your css file because you will most likely won’t use all possible combinations of css classes generated.<ul>
+<li>You can automate this with postprocessor utilities</li>
+<li>The way they work is through parsing your html and seeing what classes are there and removing those unused classes from your final css file.</li>
+</ul>
+</li>
+<li>Rarely you will need to create custom CSS, but one neat idea is to build components based in a <a href="https://tailwindcss.com/docs/extracting-components" target="_blank" rel="noopener">combination of your tailwindcss classes</a></li>
+</ul>
+<h2 id="What’s-the-catch"><a href="#What’s-the-catch" class="headerlink" title="What’s the catch?"></a>What’s the catch?</h2><ul>
+<li>The css file could become huge if you don’t postprocess it. In development it’s ok to have a 300 kb file, in production is not.</li>
+<li>At the beggining it will take time to define your components, but as time progresses you will have a clean css file that are truly components.</li>
+<li>You’re not really using the cascading part of CSS. Some people like it, some people don’t. I don’t like the cascade, it’s like inheritance in OOP without good constraints. Just pick your poison.</li>
+</ul>
+<h2 id="How-to-set-it-up"><a href="#How-to-set-it-up" class="headerlink" title="How to set it up?"></a>How to set it up?</h2><p>I will show you how to set it up with two tools: parcel and npm. I think Parcel is the easiest one and I might do a post about Webpack.</p>
+<p><strong>Prerequisites</strong>: </p>
+<ul>
+<li>Node </li>
+<li>npm </li>
+</ul>
+<h3 id="Parcel"><a href="#Parcel" class="headerlink" title="Parcel"></a>Parcel</h3><p>First make sure that Parcel.js is installed globally:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; npm i -g parcel-bundler</span><br></pre></td></tr></table></figure>
+<p>Then you can <a href="#common-configuration">follow common configuration</a> and come back to generate your files.</p>
+<p><strong> HTML </strong></p>
+<p>Because Parcel works by parsing all your files, you have to add the following line to <code>src/index.html</code> after <code>&lt;title&gt;</code>:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>Tailwindcss starter<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- add the following line --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"./tailwind.css"</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- ... --&gt;</span></span><br></pre></td></tr></table></figure>
+<p>In your terminal type:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;open http://localhost:1234 &amp;&amp; parcel src/index.html</span><br></pre></td></tr></table></figure>
+<p>Wait for the build in your terminal and the browser should auto-refresh when done. Now you can start modifying the HTML and continue your work.</p>
+<h3 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h3><p><a href="#common-configuration">Follow common configuration</a> and then come back to make some modifications.</p>
+<p>Modify your <code>package.json</code> file to include a npm script to be able to build your css, you will set your source from <code>tailwind.css</code> and output to <code>src/style.css</code>:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">scripts: &#123;</span><br><span class="line">  "css": "postcss src/tailwind.css -o src/style.css"</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p><strong> HTML </strong><br>Before generating all your files, add the following line after <code>&lt;title&gt;</code> in <code>src/index.html</code>:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>Tailwindcss starter<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- add the following line --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"style.css"</span>&gt;</span> </span><br><span class="line"><span class="comment">&lt;!-- ... --&gt;</span></span><br></pre></td></tr></table></figure>
+<p>As a last step, build your css and open <code>index.html</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; npm run css &amp;&amp; open src/index.html</span><br></pre></td></tr></table></figure>
+<p>Hopefully now you can start customizing your live-reload or <code>dist</code> folder.</p>
+<h3 id="Common-configuration"><a href="#Common-configuration" class="headerlink" title=" Common configuration"></a><a name="common-configuration"></a> Common configuration</h3><p><strong> Project configuration </strong></p>
+<p>You can copy the following lines and paste them into your terminal, and explanation will come afterwards:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mkdir new_tailwind_project &amp;&amp; cd $_ \</span><br><span class="line">&amp;&amp; npm init -y \</span><br><span class="line">&amp;&amp; npm install -E -D tailwindcss autoprefixer cssnano @fullhuman/postcss-purgecss \</span><br><span class="line">&amp;&amp; touch postcss.config.js \</span><br><span class="line">&amp;&amp; ./node_modules/.bin/tailwind init \</span><br><span class="line">&amp;&amp; mkdir src &amp;&amp; touch src/tailwind.css &amp;&amp; touch src/index.html</span><br></pre></td></tr></table></figure>
+<p>Description by line:</p>
+<ol>
+<li>Create new directory, change <code>new_tailwind_project</code> to whaterver name you want.</li>
+<li>Create a <code>package.json</code> file</li>
+<li>Add required development dependencies with explicit version numbers, for example tailwind will be: <code>0.6.4</code></li>
+<li>Create an empty postcss configuration file.</li>
+<li>Generate tailwind configuration file.</li>
+<li>Create <code>src</code> folder and the main CSS file where you can define your custom css.</li>
+</ol>
+<p><strong> Postcss </strong></p>
+<p>Modify your <code>postcss.config.js</code> like this:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> tailwindcss = <span class="built_in">require</span>(<span class="string">'tailwindcss'</span>);</span><br><span class="line"><span class="keyword">const</span> purgecss = <span class="built_in">require</span>(<span class="string">'@fullhuman/postcss-purgecss'</span>);</span><br><span class="line"><span class="keyword">const</span> cssnano = <span class="built_in">require</span>(<span class="string">'cssnano'</span>);</span><br><span class="line"><span class="keyword">const</span> autoprefixer = <span class="built_in">require</span>(<span class="string">'autoprefixer'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    tailwindcss(<span class="string">'./tailwind.js'</span>),</span><br><span class="line">    cssnano(&#123;</span><br><span class="line">      preset: <span class="string">'default'</span>,</span><br><span class="line">    &#125;),</span><br><span class="line">    purgecss(&#123;</span><br><span class="line">      content: [<span class="string">'./src/**/*.html'</span>],</span><br><span class="line">    &#125;),</span><br><span class="line">    autoprefixer,</span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><a href="https://cssnano.co/" target="_blank" rel="noopener">cssnano</a> and <a href="https://github.com/FullHuman/postcss-purgecss" target="_blank" rel="noopener">postcss-purgecss</a> will help you to keep your css file size under control. </p>
+<p><strong> Tailwind.css </strong></p>
+<p>Then modify your <code>src/tailwind.css</code> file and add these three lines:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@tailwind preflight;</span><br><span class="line">@tailwind components;</span><br><span class="line">@tailwind utilities;</span><br></pre></td></tr></table></figure>
+<p><strong> HTML </strong></p>
+<p>Add the following html to <code>src/index.html</code>:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Tailwindcss starter<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  </span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">class</span>=<span class="string">"font-sans font-hairline"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container flex m-10"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"m-10"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"max-w-sm rounded overflow-hidden shadow-lg"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://images.unsplash.com/photo-1531928351158-2f736078e0a1?ixlib=rb-0.3.5&amp;amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;amp;s=670bf968a401450fa19ef565bac7e0fe&amp;amp;dpr=1&amp;amp;auto=format&amp;amp;fit=crop&amp;amp;w=1000&amp;amp;q=80&amp;amp;cs=tinysrgb"</span></span></span><br><span class="line"><span class="tag">          <span class="attr">class</span>=<span class="string">"w-full"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"px-6 py-4"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"font-bold text-xl mb-2"</span>&gt;</span>The Coldest Sunset<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"text-grey-darker text-base"</span>&gt;</span></span><br><span class="line">            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem</span><br><span class="line">            praesentium nihil.</span><br><span class="line">          <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"px-6 py-4"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2"</span>&gt;</span>#photography<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2"</span>&gt;</span>#travel<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker"</span>&gt;</span>#winter<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/css/" rel="tag"># css</a>
+          
+            <a href="/tags/tailwind/" rel="tag"># tailwind</a>
+          
+            <a href="/tags/parcel/" rel="tag"># parcel</a>
+          
+            <a href="/tags/npm/" rel="tag"># npm</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/dependency-injection-partial-application/" rel="next" title="Dependency Injection with Partial Application in Javascript">
+                <i class="fa fa-chevron-left"></i> Dependency Injection with Partial Application in Javascript
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/classify-mnist-digits-keras/" rel="prev" title="Classify MNIST handwritten digits with Keras">
+                Classify MNIST handwritten digits with Keras <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Why-Tailwindcss"><span class="nav-number">1.</span> <span class="nav-text">Why Tailwindcss?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-does-it-work"><span class="nav-number">2.</span> <span class="nav-text">How does it work?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What’s-the-catch"><span class="nav-number">3.</span> <span class="nav-text">What’s the catch?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-set-it-up"><span class="nav-number">4.</span> <span class="nav-text">How to set it up?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Parcel"><span class="nav-number">4.1.</span> <span class="nav-text">Parcel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#npm"><span class="nav-number">4.2.</span> <span class="nav-text">npm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Common-configuration"><span class="nav-number">4.3.</span> <span class="nav-text"> Common configuration</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+
+  
+
+  
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

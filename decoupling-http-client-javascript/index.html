@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next mist" lang="en-US">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.0" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="machine-learning,deep-learning,keras,convolutional-neural-network," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="One of the basic examples in Machine Learning is to classify handwritten digits using the MNIST dataset. Here I’ll show you how to solve this problem using a Convolutional Neural Network (CNN) with Ke">
+<meta name="keywords" content="machine-learning,deep-learning,keras,convolutional-neural-network">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Classify MNIST handwritten digits with Keras">
+<meta property="og:url" content="https://topicfly.io/classify-mnist-digits-keras/index.html">
+<meta property="og:site_name" content="Topicfly">
+<meta property="og:description" content="One of the basic examples in Machine Learning is to classify handwritten digits using the MNIST dataset. Here I’ll show you how to solve this problem using a Convolutional Neural Network (CNN) with Ke">
+<meta property="og:locale" content="en-US">
+<meta property="og:image" content="https://topicfly.io/classify-mnist-digits-keras/mnist-examples.png">
+<meta property="og:image" content="https://topicfly.io/classify-mnist-digits-keras/conv.png">
+<meta property="og:image" content="https://topicfly.io/classify-mnist-digits-keras/pyplot-digits.png">
+<meta property="og:image" content="https://topicfly.io/classify-mnist-digits-keras/keras-fit.png">
+<meta property="og:image" content="https://topicfly.io/classify-mnist-digits-keras/plots.png">
+<meta property="og:updated_time" content="2018-07-25T00:49:02.189Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Classify MNIST handwritten digits with Keras">
+<meta name="twitter:description" content="One of the basic examples in Machine Learning is to classify handwritten digits using the MNIST dataset. Here I’ll show you how to solve this problem using a Convolutional Neural Network (CNN) with Ke">
+<meta name="twitter:image" content="https://topicfly.io/classify-mnist-digits-keras/mnist-examples.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false},
+    duoshuo: {
+      userId: 'undefined',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://topicfly.io/classify-mnist-digits-keras/"/>
+
+
+
+
+
+  <title>Decoupling HTTP clients React-Native | Topicfly</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en-US">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Topicfly</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://topicfly.io/decoupling-http-client-javascript/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Topicfly">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Decoupling HTTP clients React-Native</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-15T00:00:00-07:00">2018-05-15</time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-author">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-text">Hector Yeomans</span>
+            </span>
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Recently I was working on a React Native application. As is usual with a mobile client I had to write some HTTP calls to a back-end server. I started using a pretty standard pattern in my code:</p>
+<a id="more"></a>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">login</span>(<span class="params">email, password</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> payload = &#123;</span><br><span class="line">    method: <span class="string">'POST'</span>,</span><br><span class="line">    headers: &#123;</span><br><span class="line">      Accept: <span class="string">'application/json'</span></span><br><span class="line">    &#125;</span><br><span class="line">    body: <span class="built_in">JSON</span>.stringify(&#123;email, password&#125;);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> fetch(<span class="string">'https://myapi/login'</span>, payload);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Nothing complicated, you probably have done this a couple or dozens of times. It wasn’t until I finish mapping all endpoints where I realized that it would be cool if I could use all files in a Node.js application.</p>
+<p>The only problem is that <code>fetch</code> comes by default on <code>create-react-native-app</code> and not by default on Node.js. The easy way would be to add <code>node-fetch</code> to my dependencies and call it a day. However, I didn’t want to add a new dependency, what if I want to use <code>request-promise</code> or <code>axios</code> on the back-end? <strong>Also, it’s not only about the library that I use in the front-end or back-end, I just wanted to have the client be decoupled of the means of transportation.</strong></p>
+<p>So I came up with something like this:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//login.js</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">login</span>(<span class="params">wrappedHttpClient</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">email, password</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> payload = &#123;</span><br><span class="line">      method: <span class="string">'POST'</span>,</span><br><span class="line">      headers: &#123;</span><br><span class="line">        Accept: <span class="string">'application/json'</span></span><br><span class="line">      &#125;</span><br><span class="line">      body: <span class="built_in">JSON</span>.stringify(&#123;email, password&#125;);</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> wrappedHttpClient(<span class="string">'https://myapi/login'</span>, payload);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//In another file</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wrappedAxiosClient</span>(<span class="params">url, payload</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> axios(url, payload);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wrappedFetchClient</span>(<span class="params">url, payload</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> fetch(url, payload);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>There is a problem with the previous setup. Let’s take <code>node-fetch</code> and <code>axios</code> as an example. Both libraries return a promise once the request is made, nonetheless both have different payload requirements. What I mean by this is, take a look at the following code on how to make a POST request with both libraries:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//With axios</span></span><br><span class="line">axios(url, &#123;</span><br><span class="line">  method: <span class="string">"post"</span>,</span><br><span class="line">  data: &#123;</span><br><span class="line">    firstName: <span class="string">"Fred"</span>,</span><br><span class="line">    lastName: <span class="string">"Flintstone"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//And now with fetch</span></span><br><span class="line">fetch(url, &#123;</span><br><span class="line">  body: <span class="built_in">JSON</span>.stringify(data),</span><br><span class="line">  method: <span class="string">"POST"</span> <span class="comment">// *GET, POST, PUT, DELETE, etc.</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>In the case of <code>axios</code> you need a <code>data</code> property and for <code>fetch</code> you need a <code>body</code> property. So what I ended up doing is:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//My Fetch wrapper</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wrappedFetchClient</span>(<span class="params">baseUrl</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    post</span><br><span class="line">    <span class="comment">//Same for all other methods</span></span><br><span class="line">    <span class="comment">//get,</span></span><br><span class="line">    <span class="comment">//put,</span></span><br><span class="line">    <span class="comment">//remove I don't call it DELETE because Javascript has issues with delete</span></span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">post</span>(<span class="params">urlPath, body</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> payload = &#123;</span><br><span class="line">      body: <span class="built_in">JSON</span>.stringify(body),</span><br><span class="line">      method: <span class="string">"POST"</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> fetch(<span class="string">`<span class="subst">$&#123;baseUri&#125;</span><span class="subst">$&#123;urlPath&#125;</span>`</span>, payload);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//My axios wrapper</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wrappedAxiosClient</span>(<span class="params">baseUrl</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    post</span><br><span class="line">    <span class="comment">//... all other HTTP methods</span></span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">post</span>(<span class="params">urlPath, body</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> payload = &#123;</span><br><span class="line">      body: body, <span class="comment">//axios does not need to stringify as fetch</span></span><br><span class="line">      method: <span class="string">"POST"</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> axios(<span class="string">`<span class="subst">$&#123;baseUri&#125;</span><span class="subst">$&#123;urlPath&#125;</span>`</span>, payload);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>You might think is overkill to wrap your HTTP client, but remember it’s only four (or seven if you’re super pro) methods that you need to wrap and the benefit is that now you have the flexibility to use your API client code in both the front-end, back-end or react-native.</p>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+            <a href="/tags/react-native/" rel="tag"># react-native</a>
+          
+            <a href="/tags/node-js/" rel="tag"># node.js</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/dependency-injection-partial-application/" rel="prev" title="Dependency Injection with Partial Application in Javascript">
+                Dependency Injection with Partial Application in Javascript <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+
+  
+
+  
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
