@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next mist" lang="en-US">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.0" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="hyperledger-fabric,hyperledger-composer,blockchain,docker,docker-swarm,distributed-network,node," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="We will learn how to deploy Hyperledger Fabric and Hyperledger Composer on a distributed network using physically separated nodes connected via Docker Swarm. This guide is not production ready, as it">
+<meta name="keywords" content="hyperledger-fabric,hyperledger-composer,blockchain,docker,docker-swarm,distributed-network,node">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hyperledger Fabric and Composer on Docker Swarm">
+<meta property="og:url" content="https://topicfly.io/hyperledger-fabric-composer-swarm/index.html">
+<meta property="og:site_name" content="Topicfly">
+<meta property="og:description" content="We will learn how to deploy Hyperledger Fabric and Hyperledger Composer on a distributed network using physically separated nodes connected via Docker Swarm. This guide is not production ready, as it">
+<meta property="og:locale" content="en-US">
+<meta property="og:updated_time" content="2018-08-28T05:11:19.818Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hyperledger Fabric and Composer on Docker Swarm">
+<meta name="twitter:description" content="We will learn how to deploy Hyperledger Fabric and Hyperledger Composer on a distributed network using physically separated nodes connected via Docker Swarm. This guide is not production ready, as it">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false},
+    duoshuo: {
+      userId: 'undefined',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://topicfly.io/hyperledger-fabric-composer-swarm/"/>
+
+
+
+
+
+  <title>Face Detection with dlib | Topicfly</title>
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-122843286-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-122843286-1');
+  </script>
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en-US">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Topicfly</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://topicfly.io/face-detection-with-dlib/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Topicfly">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Face Detection with dlib</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-18T00:00:00-07:00">2018-10-18</time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-author">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-text">Isaac Zepeda</span>
+            </span>
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/face-detection-with-dlib/cover.jpg"></p>
+<p>Face Detection is the first step towards Face Recognition.</p>
+<p>There are a number of algorithms to detect faces: <a href="https://www.quora.com/What-is-haar-cascade" target="_blank" rel="noopener">haar cascade</a>, <a href="https://en.wikipedia.org/wiki/Histogram_of_oriented_gradients" target="_blank" rel="noopener">Histogram of Oriented Gradients</a>, <a href="https://en.wikipedia.org/wiki/Artificial_neural_network" target="_blank" rel="noopener">Neural Networks</a>. There is a <a href="https://docs.opencv.org/3.4.2/d7/d8b/tutorial_py_face_detection.html" target="_blank" rel="noopener">Haar implementation in OpenCV</a>, and dlib uses HOG and <a href="https://towardsdatascience.com/cnn-based-face-detector-from-dlib-c3696195e01c" target="_blank" rel="noopener">Neural Networks</a>.</p>
+<p>We’ll learn how to detect faces in an image in a few lines of code using python, <a href="http://dlib.net/" target="_blank" rel="noopener">dlib</a> and <a href="https://opencv.org/" target="_blank" rel="noopener">opencv</a>.</p>
+<a id="more"></a>
+<h2 id="The-Libraries"><a href="#The-Libraries" class="headerlink" title="The Libraries"></a>The Libraries</h2><p><a href="http://dlib.net/" target="_blank" rel="noopener">Dlib</a> is a modern C++ toolkit containing machine learning algorithms and tools for creating complex software to solve real-world problems. We are going to use its <a href="http://dlib.net/python/index.html" target="_blank" rel="noopener">Python API</a>.</p>
+<p><a href="https://opencv.org/" target="_blank" rel="noopener">OpenCV</a> is a Computer Vision library also with interfaces in C++, Python, and Java, and contains a lot of functions to help us to manipulate images.</p>
+<h2 id="Installing-Dlib-and-Opencv"><a href="#Installing-Dlib-and-Opencv" class="headerlink" title="Installing Dlib and Opencv"></a>Installing Dlib and Opencv</h2><p>Installing Python and its libraries are out of scope of this post. There are some tutorials out there that would help you get python, dlib and OpenCV installed. Here are a couple of links to install them on mac os:</p>
+<ul>
+<li><a href="https://www.learnopencv.com/install-dlib-on-macos/" target="_blank" rel="noopener">https://www.learnopencv.com/install-dlib-on-macos/</a></li>
+<li><a href="https://www.learnopencv.com/install-opencv3-on-macos/" target="_blank" rel="noopener">https://www.learnopencv.com/install-opencv3-on-macos/</a></li>
+</ul>
+<h2 id="Face-Detection"><a href="#Face-Detection" class="headerlink" title="Face Detection"></a>Face Detection</h2><p>In dlib API we can find the <code>get_frontal_face_detector</code> method which “returns an object detector configured to detect human faces that are looking more or less towards the camera”.</p>
+<p>The algorithm used to detect faces is <a href="https://lear.inrialpes.fr/people/triggs/pubs/Dalal-cvpr05.pdf" target="_blank" rel="noopener">Histograms of Gradients (HOG)</a> plus a <a href="https://en.wikipedia.org/wiki/Support_vector_machine" target="_blank" rel="noopener">LinearSVM</a>.</p>
+<p>As I mentioned dlib also has a Neural Network implementation, it performs better than HOG to detect non-frontal faces, unfortunately it’s computationally heavy, and it’s out of the scope in this post, if you are interested you could check the <a href="#sources">“Sources”</a> section of this post for more info.</p>
+<p>In broad terms, the HOG algorithm will iterate on every pixel of a given image, in each pixel, it checks all the pixels around it and figures out how dark the current pixel is compared with the directly pixels surrounding it. Then it draws an arrow showing in which direction is getting darker. The process is repeated on every pixel, then it breaks down in say 16x16 pixels squares, where it counts up how many gradients point in each major direction, then that square is replaced with the arrow direction that was the strongest. Then using a lot of faces, we could train a Linear Support Vector Machine model to detect faces in an image. - <em>Source:</em> <a href="https://medium.com/@ageitgey/machine-learning-is-fun-part-4-modern-face-recognition-with-deep-learning-c3cffc121d78" target="_blank" rel="noopener">Machine Learning is Fun! Part 4: Modern Face Recognition with Deep Learning
+</a></p>
+<p><img src="/face-detection-with-dlib/hog.png"></p>
+<p>Dlib provides a the pre-trained model using HOG through the <code>get_frontal_face_detector</code> method.</p>
+<h2 id="The-Code"><a href="#The-Code" class="headerlink" title="The Code"></a>The Code</h2><p>We need to code the following steps:</p>
+<ol>
+<li>Import libraries.</li>
+<li>Get the dlib frontal face detector.</li>
+<li>Load the image using OpenCV.</li>
+<li>Pass the loaded image to the <code>detector</code>, it returns an array of rectangles, each rectangle containing the detected face bounds.</li>
+<li>Iterate over the found faces and draw a rectangle in the original image.</li>
+<li>Show image with detected faces</li>
+</ol>
+<figure class="highlight python"><figcaption><span>facedetection.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. Import libraries</span></span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> dlib</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line"><span class="comment"># Use argparse so we can send the image path from the command line</span></span><br><span class="line">ap = argparse.ArgumentParser()</span><br><span class="line">ap.add_argument(<span class="string">"-i"</span>, <span class="string">"--image"</span>,</span><br><span class="line">    help=<span class="string">"Image to input image to detect faces"</span>)</span><br><span class="line">args = vars(ap.parse_args())</span><br><span class="line">f = args[<span class="string">'image'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. Get the dlib frontal face detector</span></span><br><span class="line">detector = dlib.get_frontal_face_detector()</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Processing file: &#123;&#125;"</span>.format(f))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. Load the image using OpenCV</span></span><br><span class="line">img = cv2.imread(f)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. Pass de loaded image to the `detector`</span></span><br><span class="line">dets = detector(img, <span class="number">1</span>)</span><br><span class="line">print(<span class="string">"Number of faces detected: &#123;&#125;"</span>.format(len(dets)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. Iterate over the found faces and draw a rectangle in the original image.</span></span><br><span class="line"><span class="keyword">for</span> i, d <span class="keyword">in</span> enumerate(dets):</span><br><span class="line">    print(<span class="string">"Detection &#123;&#125;: Left: &#123;&#125; Top: &#123;&#125; Right: &#123;&#125; Bottom: &#123;&#125;"</span>.format(</span><br><span class="line">        i, d.left(), d.top(), d.right(), d.bottom()))</span><br><span class="line">    cv2.rectangle(img, (d.left(), d.top()), (d.right(), d.bottom()),</span><br><span class="line">                (<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>), <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 6. Show image with detected faces</span></span><br><span class="line">cv2.imshow(<span class="string">'image'</span>, img)</span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br><span class="line">cv2.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+<h2 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h2><p>Let’s use a couple of images from one of my favorite face-recognition-general-ai-related tv shows, <a href="https://www.imdb.com/title/tt1839578" target="_blank" rel="noopener">Person of Interest</a>.</p>
+<p><img src="/face-detection-with-dlib/example001.png"></p>
+<p>We need to run the script in command-line using the <code>-i</code> or <code>--image</code> argument to the image where we want to detect the faces:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; python facedetection.py -i example001.png</span><br><span class="line">Processing file: example001.png</span><br><span class="line">Number of faces detected: 2</span><br><span class="line">Detection 0: Left: 476 Top: 150 Right: 631 Bottom: 305</span><br><span class="line">Detection 1: Left: 975 Top: 253 Right: 1130 Bottom: 408</span><br></pre></td></tr></table></figure>
+<p>We could see in the console output the detected rectangles and the left-top and bottom-right points coordinates. The result looks like this:</p>
+<p><img src="/face-detection-with-dlib/example001_detected.png"></p>
+<p>Another example</p>
+<p><img src="/face-detection-with-dlib/example002_detected.png"></p>
+<h2 id="Sources"><a href="#Sources" class="headerlink" title="Sources"></a><a name="sources"></a>Sources</h2><ul>
+<li><a href="http://dlib.net/face_detector.py.html" target="_blank" rel="noopener">http://dlib.net/face_detector.py.html</a></li>
+<li><a href="https://www.pyimagesearch.com/2018/01/22/install-dlib-easy-complete-guide/" target="_blank" rel="noopener">https://www.pyimagesearch.com/2018/01/22/install-dlib-easy-complete-guide/</a></li>
+<li><a href="https://www.pyimagesearch.com/2017/04/03/facial-landmarks-dlib-opencv-python/" target="_blank" rel="noopener">https://www.pyimagesearch.com/2017/04/03/facial-landmarks-dlib-opencv-python/</a></li>
+<li><a href="https://www.youtube.com/watch?v=0Zib1YEE4LU" target="_blank" rel="noopener">https://www.youtube.com/watch?v=0Zib1YEE4LU</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Histogram_of_oriented_gradients" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Histogram_of_oriented_gradients</a></li>
+<li><a href="https://www.learnopencv.com/histogram-of-oriented-gradients/" target="_blank" rel="noopener">https://www.learnopencv.com/histogram-of-oriented-gradients/</a></li>
+<li>Paper <a href="https://lear.inrialpes.fr/people/triggs/pubs/Dalal-cvpr05.pdf" target="_blank" rel="noopener">Histograms of Oriented Gradients for Human Detection</a></li>
+<li><a href="https://medium.com/@ageitgey/machine-learning-is-fun-part-4-modern-face-recognition-with-deep-learning-c3cffc121d78" target="_blank" rel="noopener">https://medium.com/@ageitgey/machine-learning-is-fun-part-4-modern-face-recognition-with-deep-learning-c3cffc121d78</a></li>
+<li><a href="https://towardsdatascience.com/cnn-based-face-detector-from-dlib-c3696195e01c" target="_blank" rel="noopener">https://towardsdatascience.com/cnn-based-face-detector-from-dlib-c3696195e01c</a></li>
+<li><a href="https://www.quora.com/What-is-haar-cascade" target="_blank" rel="noopener">https://www.quora.com/What-is-haar-cascade</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Artificial_neural_network" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Artificial_neural_network</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/machine-learning/" rel="tag"># machine-learning</a>
+          
+            <a href="/tags/face-detection/" rel="tag"># face-detection</a>
+          
+            <a href="/tags/computer-vision/" rel="tag"># computer-vision</a>
+          
+            <a href="/tags/dlib/" rel="tag"># dlib</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/javascript-generators/" rel="next" title="Javascript Generators">
+                <i class="fa fa-chevron-left"></i> Javascript Generators
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Libraries"><span class="nav-number">1.</span> <span class="nav-text">The Libraries</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Installing-Dlib-and-Opencv"><span class="nav-number">2.</span> <span class="nav-text">Installing Dlib and Opencv</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Face-Detection"><span class="nav-number">3.</span> <span class="nav-text">Face Detection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Code"><span class="nav-number">4.</span> <span class="nav-text">The Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Results"><span class="nav-number">5.</span> <span class="nav-text">Results</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sources"><span class="nav-number">6.</span> <span class="nav-text">Sources</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+
+  
+
+  
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
